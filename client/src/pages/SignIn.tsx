@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import Login from "../assets/svg/LoginImage.svg";
 import BackButton from "../components/BackButton";
 import Loader from "../components/Loader";
+import { loginUser } from "../services/api.services";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -24,8 +26,19 @@ const SignIn = () => {
       [e.target.id]: e.target.value,
     }));
   };
+
   const handleSubmit = () => {
     setLoading(true);
+    loginUser(formData)
+      .then((res) => {
+        if (res.success && res.token) {
+          toast.success(res.message);
+          console.log("token", res.token);
+          localStorage.setItem("token", res.token);
+        } else toast.error(res.message);
+      })
+      .catch(() => toast.error("Something went wrong!, please try again later"))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -53,10 +66,7 @@ const SignIn = () => {
             >
               <p className="text-center font-semibold mx-4">or</p>
             </div>
-            <form
-              className="flex flex-col items-center w-full "
-              onSubmit={handleSubmit}
-            >
+            <form className="flex flex-col items-center w-full ">
               <div className="flex flex-col items-center w-full mb-4">
                 <label
                   className="text-left w-full text-black text-lg font-medium"
@@ -107,13 +117,12 @@ const SignIn = () => {
               </div>
 
               <button
-                onClick={() => navigate("/dashboard/")}
+                onClick={handleSubmit}
                 disabled={loading}
                 className="mt-8 w-full bg-black text-white px-7 py-3 text-sm 
           font-medium uppercase rounded shadow-md
         hover:bg-gray-700 transition duration-150 
           ease-in-out hover:shadow-lg active:bg-gray-800"
-                type="submit"
               >
                 {loading && (
                   <Loader textColor="text-gray-300" loaderColor="fill-black" />

@@ -2,7 +2,6 @@ import { getAuth } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { FaHome, FaMoneyBill } from "react-icons/fa";
-import { toast } from "react-toastify";
 import { db } from "../firebase";
 import HeaderTitle from "./HeaderTitle";
 import Spinner from "./Spinner";
@@ -170,7 +169,6 @@ const Home = () => {
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
-                toast.error("Could not fetch data");
             }
         }
         fetchHomeStats();

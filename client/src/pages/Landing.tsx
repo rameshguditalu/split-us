@@ -41,7 +41,7 @@ const Landing = () => {
             Make sharing expenses simple for travel, activities and daily life.
           </div>
           <div
-            onClick={() => navigate("/signin")}
+            onClick={() => navigate("/signup")}
             className="md:mt-8 mt-4 flex sm:mx-0 mx-auto items-center mb-6 w-[200px] justify-center px-7 py-3 bg-zinc-700 text-white text-lg font-medium text-base uppercase rounded-md shadow-md cursor-pointer"
           >
             Get Started

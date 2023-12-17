@@ -6,7 +6,7 @@ import Login from "../assets/svg/LoginImage.svg";
 import BackButton from "../components/BackButton";
 import Loader from "../components/Loader";
 import { User, registerUser } from "../services/api.services";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -29,8 +29,12 @@ const SignUp = () => {
   const handleSubmit = () => {
     setLoading(true);
     registerUser(formData)
-      .then((res) => toast(res))
-      .catch(() => toast("Something Went Wrong"))
+      .then((res) => {
+        if (res.success) toast.success(res.message);
+        else toast.error(res.message);
+        navigate("/signin");
+      })
+      .catch(() => toast.error("Something Went Wrong, please try again later"))
       .finally(() => setLoading(false));
   };
 

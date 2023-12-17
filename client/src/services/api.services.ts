@@ -1,12 +1,18 @@
 import axios from "axios";
 export type User = {
   id?: string;
-  name: string;
+  name?: string;
   email: string;
   password: string;
 };
 
-export function registerUser(formData: User): Promise<string> {
+export type AxiosResponse = {
+  success: boolean;
+  message: string;
+  token?: string;
+};
+
+export function registerUser(formData: User): Promise<AxiosResponse> {
   return new Promise((resolve, reject) => {
     axios
       .post("http://localhost:8080/api/user/register", {
@@ -15,7 +21,21 @@ export function registerUser(formData: User): Promise<string> {
         password: formData.password,
       })
       .then((response) => {
-        resolve(response.data.message);
+        resolve(response.data);
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+export function loginUser(formData: User): Promise<AxiosResponse> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post("http://localhost:8080/api/user/login", {
+        email: formData.email,
+        password: formData.password,
+      })
+      .then((response) => {
+        resolve(response.data);
       })
       .catch((err) => reject(err));
   });
