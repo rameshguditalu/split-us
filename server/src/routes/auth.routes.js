@@ -8,7 +8,7 @@ exports.routes = (app) => {
 
   app.post("/api/user/register", controller.signup);
 
-  // app.post("/api/auth/signin", controller.signin);
+  app.post("/api/user/login", controller.signin);
 
   //   app.post("/api/auth/signout", controller.signout);
 };
