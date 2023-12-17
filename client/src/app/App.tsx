@@ -1,9 +1,8 @@
-import Landing from "./pages/Landing";
+import Landing from "../pages/Landing";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { lazy } from "react";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignIn from "../features/profile/SignIn";
+import SignUp from "../features/profile/SignUp";
 // const SignIn = lazy(() => import("./pages/SignIn"));
 // const SignUp = lazy(() => import("./pages/SignUp"));
 // import Dashboard from "./pages/Dashboard";

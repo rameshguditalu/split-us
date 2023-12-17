@@ -2,14 +2,15 @@ import axios from "axios";
 export type User = {
   id?: string;
   name?: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 };
 
 export type AxiosResponse = {
   success: boolean;
   message: string;
-  token?: string;
+  authToken?: string;
+  data?: User;
 };
 
 export function registerUser(formData: User): Promise<AxiosResponse> {
@@ -37,6 +38,6 @@ export function loginUser(formData: User): Promise<AxiosResponse> {
       .then((response) => {
         resolve(response.data);
       })
-      .catch((err) => reject(err));
+      .catch((err) => reject(err?.response?.data));
   });
 }

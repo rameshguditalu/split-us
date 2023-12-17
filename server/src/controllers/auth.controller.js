@@ -51,7 +51,7 @@ exports.signin = async (req, res) => {
     });
     return res
       .status(200)
-      .send({ success: true, message: "Login Successful!", token });
+      .send({ success: true, message: "Login Successful!", token, user });
   } catch (error) {
     return res.status(500).send({ success: true, message: error.message });
   }

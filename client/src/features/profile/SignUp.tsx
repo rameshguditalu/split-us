@@ -2,25 +2,24 @@ import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 // import GoogleAuth from "../components/GoogleAuth";
-// import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import Login from "../assets/svg/LoginImage.svg";
-import BackButton from "../components/BackButton";
-import Loader from "../components/Loader";
-import { loginUser } from "../services/api.services";
-import toast from "react-hot-toast";
+import BackButton from "../../common/components/BackButton";
+import Loader from "../../common/components/Loader";
+import { User, registerUser } from "./services/profileService";
+import { toast } from "react-hot-toast";
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<User>({
+    name: "",
     email: "",
     password: "",
   });
-  const { email, password } = formData;
-
+  const { name, email, password } = formData;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handlChange = (e: { target: { id: any; value: any } }) => {
+  const handleChange = (e: any) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
@@ -29,23 +28,21 @@ const SignIn = () => {
 
   const handleSubmit = () => {
     setLoading(true);
-    loginUser(formData)
+    registerUser(formData)
       .then((res) => {
-        if (res.success && res.token) {
-          toast.success(res.message);
-          console.log("token", res.token);
-          localStorage.setItem("token", res.token);
-        } else toast.error(res.message);
+        if (res.success) toast.success(res.message);
+        else toast.error(res.message);
+        navigate("/signin");
       })
-      .catch(() => toast.error("Something went wrong!, please try again later"))
+      .catch(() => toast.error("Something Went Wrong, please try again later"))
       .finally(() => setLoading(false));
   };
 
   return (
-    <section className="md:px-0 px-2 md:pt-4 py-8">
+    <section className="md:px-0 px-2 md:pt-4 py-4">
       <div
         className="flex justify-between flex-wrap items-center
-      px-6 py-12 max-w-6xl mx-auto"
+      px-6 py-2 max-w-6xl mx-auto"
       >
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6 lg:block hidden">
           <img src={Login} alt="key" className="w-full rounded-2xl" />
@@ -55,7 +52,7 @@ const SignIn = () => {
             <div className="text-2xl flex items-center">
               <BackButton /> <span className="ml-2">Welcome !</span>
             </div>
-            <div className="mt-4 font-medium text-2xl">Sign in to</div>
+            <div className="mt-4 font-medium text-2xl">Sign up to</div>
             <div className="mt-1 font-normal text-base">Split the bill</div>
 
             {/* <GoogleAuth /> */}
@@ -67,6 +64,25 @@ const SignIn = () => {
               <p className="text-center font-semibold mx-4">or</p>
             </div>
             <form className="flex flex-col items-center w-full ">
+              <div className="flex flex-col items-center w-full mb-4">
+                <label
+                  className="text-left w-full text-black text-lg font-medium"
+                  htmlFor="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="mt-2 w-full h-10 border border-gray-300 rounded
+                transition duration-150 ease-in-out focus:text-gray-700
+                 focus:bg-white focus:border-slate-600 p-2"
+                  type="text"
+                  id="name"
+                  placeholder="Enter your name"
+                  required={true}
+                  value={name}
+                  onChange={handleChange}
+                />
+              </div>
               <div className="flex flex-col items-center w-full mb-4">
                 <label
                   className="text-left w-full text-black text-lg font-medium"
@@ -83,7 +99,7 @@ const SignIn = () => {
                   placeholder="Enter Email Address"
                   required={true}
                   value={email}
-                  onChange={handlChange}
+                  onChange={handleChange}
                 />
               </div>
               <div className="relative flex flex-col items-center w-full">
@@ -101,7 +117,7 @@ const SignIn = () => {
                   placeholder="Enter your password"
                   required={true}
                   value={password}
-                  onChange={handlChange}
+                  onChange={handleChange}
                 />
                 {showPassword ? (
                   <AiFillEyeInvisible
@@ -117,8 +133,8 @@ const SignIn = () => {
               </div>
 
               <button
-                onClick={handleSubmit}
                 disabled={loading}
+                onClick={handleSubmit}
                 className="mt-8 w-full bg-black text-white px-7 py-3 text-sm 
           font-medium uppercase rounded shadow-md
         hover:bg-gray-700 transition duration-150 
@@ -127,24 +143,18 @@ const SignIn = () => {
                 {loading && (
                   <Loader textColor="text-gray-300" loaderColor="fill-black" />
                 )}
-                {!loading && "Sign In"}
+                {!loading && "Sign Up"}
               </button>
 
               <div className="mt-4 flex flex-col md:flex-row items-center w-full">
                 <div className="flex items-center font-light text-base text-gray-500">
-                  Don't have an account
+                  Have an account
                   <span
                     className="text-black ml-2 font-medium cursor-pointer"
-                    onClick={() => navigate("/signup")}
+                    onClick={() => navigate("/signin")}
                   >
-                    Register
+                    Sign In
                   </span>
-                </div>
-                <div
-                  className="cursor-pointer md:ml-auto flex items-center font-light text-base text-gray-500"
-                  onClick={() => navigate("/forgotpassword")}
-                >
-                  Forgot Password?
                 </div>
               </div>
             </form>
@@ -155,4 +165,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

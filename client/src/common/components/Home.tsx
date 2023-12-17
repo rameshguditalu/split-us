@@ -19,6 +19,8 @@ import {
 } from "recharts";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { COLORS, EXPENSECOLORS, monthName } from "../utils/constants";
+import { useSelector } from "react-redux";
+import { profileState } from "../../features/profile/profileSlice";
 
 const Home = () => {
     const { widthView } = useWindowDimensions();
