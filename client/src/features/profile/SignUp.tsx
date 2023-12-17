@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 // import GoogleAuth from "../components/GoogleAuth";
-import Login from "../assets/svg/LoginImage.svg";
+import Login from "../../assets/svg/LoginImage.svg";
 import BackButton from "../../common/components/BackButton";
 import Loader from "../../common/components/Loader";
 import { User, registerUser } from "./services/profileService";

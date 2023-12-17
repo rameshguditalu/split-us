@@ -3,7 +3,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 // import GoogleAuth from "../components/GoogleAuth";
 // import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
-import Login from "../assets/svg/LoginImage.svg";
+import Login from "../../assets/svg/LoginImage.svg";
 import BackButton from "../../common/components/BackButton";
 import Loader from "../../common/components/Loader";
 import { loginUser } from "./services/profileService";
